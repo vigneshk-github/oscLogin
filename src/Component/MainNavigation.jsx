@@ -15,7 +15,7 @@ export default function MainNavigation() {
           </li>
           <li>
             <Link
-              to="/register"
+              to="/Register"
               className="text-white font-semibold hover:text-gray-300"
             >
               Register
@@ -23,7 +23,7 @@ export default function MainNavigation() {
           </li>
           <li>
             <Link
-              to="/LoginPage"
+              to="/Login"
               className="text-white font-semibold hover:text-gray-300"
             >
               Login for OSC

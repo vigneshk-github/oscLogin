@@ -1,34 +1,29 @@
-import React, { useState } from "react";
-import LoginPage from "./Component/LoginPage";
-import Register from "./Component/Register";
+import React from "react";
+import Register,{action as RegisterAction} from "./Component/Register";
 import Home from "./Component/Home";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { createBrowserRouter } from "react-router-dom";
 import Root from "./Component/Root";
-import { loginUser } from "./Component/api";
 import "./App.css";
+import Login, { action as LoginAction } from "./Component/Login";
+import { RouterProvider } from "react-router";
+import Error from "./Component/ErrorPage";
+import ErrorPage from "./Component/ErrorPage";
 
-const App = () => {
-  const [loggedIn, setLoggedIn] = useState(false);
-  const [isAdmin, setAdmin] = useState(false);
+function App() {
+  const router = createBrowserRouter([
+    {
+      path: "/",
+      element: <Root />,
+      errorElement: <ErrorPage />,
+      children: [
+        { path: "/", element: <Home /> },
+        { path: "/Register", element: <Register />,action:RegisterAction },
+        { path: "/Login", element: <Login />, action: LoginAction },
+      ],
+    },
+  ]);
 
-  const handleLogin = (formData, navigate) => {
-    loginUser(formData, setLoggedIn, setAdmin, navigate);
-  };
-
-  return (
-    <Router>
-      <Routes>
-        <Route
-          path="/"
-          element={<Root />}
-        >
-          <Route path="/" element={<Home />} />
-          <Route path="/Register" element={<Register />} />
-          <Route path="/LoginPage" element={<LoginPage loginUser={handleLogin} />} />
-        </Route>
-      </Routes>
-    </Router>
-  );
-};
+  return <RouterProvider router={router} />;
+}
 
 export default App;
